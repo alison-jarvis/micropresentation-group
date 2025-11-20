@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from networkx.algorithms.shortest_paths import astar_path, dijkstra_path
 from graph_helpers import create_chromo_graph, get_peak_distance_heuristic, print_path
+from time import time
 
 print("Loading Dataframes...")
 try:
@@ -49,6 +50,8 @@ start_donor = "O=C1NC(=O)c2ccc(N3CCCCC3)c3cccc1c23"
 end_acceptor = "COc1ccc(-c2cc3c(s2)=CC2=C(C(F)(F)F)c4cc5sc(-c6ccc(OC)cc6)cc5n4[B-](F)(F)[N+]=32)cc1"
 
 heuristic_function = get_peak_distance_heuristic(solvent, chromo_df)
+
+start = time()
 output_path_astar = astar_path(
     solvent_graphs[solvent],
     start_donor,
@@ -56,18 +59,23 @@ output_path_astar = astar_path(
     heuristic_function,
     weight='weight'
 )
+stop = time()
 print("Path Found by A*: ")
 print_path(output_path_astar, solvent_graphs[solvent])
+print(f"runtime: {stop-start:.3f}")
 
 print('-'*30)
 print()
 
 # Compare with dikstra's
+start = time()
 output_path_dijkstra = dijkstra_path(
     solvent_graphs[solvent],
     start_donor,
     end_acceptor,
     weight='weight'
 )
+stop = time()
 print("Path Found by Dijkstra's: ")
 print_path(output_path_dijkstra, solvent_graphs[solvent])
+print(f"runtime: {stop-start:.3f}")
