@@ -4,9 +4,15 @@ from networkx.algorithms.shortest_paths import astar_path, dijkstra_path
 from graph_helpers import create_chromo_graph, get_peak_distance_heuristic, print_path
 
 print("Loading Dataframes...")
-chromo_df = pd.read_pickle("chromo_db_filtered.pkl")
+try:
+    chromo_df = pd.read_pickle("chromo_db_filtered.pkl")
+except FileNotFoundError as e:
+    raise FileNotFoundError("Please add the chromo_db_filtered.pkl file to this directory")
 
-overlap_df = pd.read_pickle("percent_overlap_df.pkl")
+try:
+    overlap_df = pd.read_pickle("percent_overlap_df.pkl")
+except FileNotFoundError as e:
+    raise FileNotFoundError("Please add the percent_overlap_df.pkl file to this directory")
 overlap_df = overlap_df.dropna()
 
 
