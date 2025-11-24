@@ -1,0 +1,27 @@
+Scope-> project folder for the A* search pathfindsings frm nodes & edge weighs
+representing the relative overlap of the em/abs overlap to identify the bes donor-
+acceptor pair (D-A) using FRET. 
+
+
+
+Optimal chains of energy transfer event, when applying photochemical features, rather 
+than just picking the best D-A. Since our goal is to pair individual donor and acceptor is 
+not the same as selecting chains(DIJKSTRA), we need to find paths through the graph that maximize the
+total energy transfer efficiency over multiple steps. 
+https://pmc.ncbi.nlm.nih.gov/articles/PMC4424985/
+
+Each edge weighs representing the probability that a photon emits and is absorbed 
+=
+integrating over spectra
+
+>Each chromophore acts as a donor and an acceptor, and the spectral overalp seen in FRET rates 
+determines this edge weighs
+
+J=∫F 
+D
+ (λ)ε 
+A
+ (λ)λ 
+4
+ dλ -> forster theory normalization. 
+
