@@ -8,13 +8,13 @@ import os
 current_dir = os.path.dirname(__file__)
 sys.path.append(current_dir)
 
-from graph_helpers import (
+from .graph_helpers import (
     create_chromo_graph,
     get_peak_distance_heuristic,
-    print_path,
-    A_star,
+    print_path
 )
 
+from ..a_star import A_star
 
 print("Loading Dataframes...")
 try:
