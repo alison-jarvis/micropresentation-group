@@ -24,9 +24,17 @@ for solvent in overlap_df['Solvent'].unique():
     solvent_graphs[solvent] = create_chromo_graph(overlap_df, solvent)
 
 # Add -ln(overlap) as our edge weights for pathfinding
-for graph in solvent_graphs.values():
+# And absorption and emission wavelengths for our nodes
+for solv, graph in solvent_graphs.items():
     for edge in graph.edges(data=True):
         edge[2]["weight"] = -np.log(edge[2]["Percent Overlap"])
+    for node, attrs in graph.nodes.items():
+        node_row = chromo_df.loc[(chromo_df['Solvent_iupac']==solv) & (chromo_df['Chromophore']==node)]
+        if len(node_row) == 0: 
+            breakpoint()
+        attrs["abs_peak"] = node_row['Absorption max (nm)'].iat[0]
+        attrs['ems_peak'] = node_row['Emission max (nm)'].iat[0]
+    
 
 print("Done!")
 print()

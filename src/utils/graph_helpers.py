@@ -60,6 +60,13 @@ def print_path(path: list[str], graph: nx.Graph) -> None:
         total_dist += edge_weight
         disp_prev, disp_cur = smiles_to_uipac_name(prev_node), smiles_to_uipac_name(cur_node)
         print(f"{i+1}. {disp_prev}-[{edge_weight:.2f}]->{disp_cur}")
+
+    for node in path:
+        disp_node = smiles_to_uipac_name(node)
+        emission_wl = graph.nodes[node]['ems_peak']
+        absorbtion_wl = graph.nodes[node]['abs_peak']
+        print(f"{disp_node}: Absorption - {absorbtion_wl:.2f} nm -- Emission - {emission_wl:.2f} nm")
+
     print(f"total distance: {total_dist:.2f}")
     print(f"effective yield: {np.exp(-total_dist):.2f}")
 
