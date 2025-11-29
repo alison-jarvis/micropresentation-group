@@ -102,8 +102,22 @@ output_path_astar_custom = A_star(
     start_donor,
     end_acceptor,
     heuristic_function,
+    cache_heuristic=False
 )
 stop = time()
-print("Path Found by A* (custom): ")
+print("Path Found by A* (custom, no cache): ")
+print_path(output_path_astar_custom, solvent_graphs[solvent])
+print(f"runtime: {stop-start:.3f}")
+
+start = time()
+output_path_astar_custom = A_star(
+    solvent_graphs[solvent],
+    start_donor,
+    end_acceptor,
+    heuristic_function,
+    cache_heuristic=True
+)
+stop = time()
+print("Path Found by A* (custom, *with* cache): ")
 print_path(output_path_astar_custom, solvent_graphs[solvent])
 print(f"runtime: {stop-start:.3f}")
