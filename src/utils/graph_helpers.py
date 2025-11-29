@@ -63,8 +63,9 @@ def print_path(path: list[str], graph: nx.Graph) -> None:
 
     for node in path:
         disp_node = smiles_to_uipac_name(node)
-        emission_wl = graph.nodes[node]['ems_peak']
-        absorbtion_wl = graph.nodes[node]['abs_peak']
+        emission_wl = graph.nodes[node].get('ems_peak', float('nan'))
+        absorbtion_wl = graph.nodes[node].get('abs_peak', float('nan'))
+        print(graph.nodes[node])
         print(f"{disp_node}: Absorption - {absorbtion_wl:.2f} nm -- Emission - {emission_wl:.2f} nm")
 
     print(f"total distance: {total_dist:.2f}")
