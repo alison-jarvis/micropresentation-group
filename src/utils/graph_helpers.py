@@ -5,10 +5,14 @@ import numpy as np
 from typing import Callable
 from functools import lru_cache
 
-def create_chromo_graph(overlap_df:pd.DataFrame, solvent:str, overlap_threshold:float=0.10) -> nx.DiGraph:
+def create_chromo_graph(
+    overlap_df:pd.DataFrame,
+    chromo_df:pd.DataFrame,
+    solvent:str,
+    overlap_threshold:float=0.10
+) -> nx.DiGraph:
     '''Construct a Digraph for each solvent'''
-    overlap_df = overlap_df[overlap_df["Percent Overlap"] >= overlap_threshold]
-    overlap_df = overlap_df[overlap_df["Solvent"] == solvent]
+    overlap_df = overlap_df[(overlap_df["Percent Overlap"].fillna(0) >= overlap_threshold) & (overlap_df["Solvent"] == solvent)]
     G = nx.from_pandas_edgelist(
         overlap_df,
         source="Chromo B",
@@ -16,6 +20,9 @@ def create_chromo_graph(overlap_df:pd.DataFrame, solvent:str, overlap_threshold:
         edge_attr="Percent Overlap",
         create_using=nx.DiGraph
     )
+   
+    solvent_chromo_df = chromo_df[chromo_df['Solvent_iupac'] == solvent]
+    G.add_nodes_from(zip(list(solvent_chromo_df['Chromophore']), solvent_chromo_df.to_dict(orient='records')))
     return G
 
 def get_peak_distance_heuristic(solvent:str, chromo_df:pd.DataFrame) -> Callable:
@@ -63,9 +70,8 @@ def print_path(path: list[str], graph: nx.Graph) -> None:
 
     for node in path:
         disp_node = smiles_to_uipac_name(node)
-        emission_wl = graph.nodes[node].get('ems_peak', float('nan'))
-        absorbtion_wl = graph.nodes[node].get('abs_peak', float('nan'))
-        print(graph.nodes[node])
+        emission_wl = graph.nodes[node].get('Emission max (nm)', float('nan'))
+        absorbtion_wl = graph.nodes[node].get('Absorption max (nm)', float('nan'))
         print(f"{disp_node}: Absorption - {absorbtion_wl:.2f} nm -- Emission - {emission_wl:.2f} nm")
 
     print(f"total distance: {total_dist:.2f}")
