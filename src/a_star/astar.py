@@ -1,5 +1,7 @@
 import heapq
 import networkx as nx
+from typing import Callable
+from functools import lru_cache
 
 class Chromo:
     def __init__(self):
@@ -10,8 +12,20 @@ class Chromo:
 
 
 """Implementation based on this tutorial: https://www.geeksforgeeks.org/dsa/a-search-algorithm/"""
-def A_star(graph: nx.Graph, source: str, target: str, heuristic) -> list:
+def A_star(
+        graph: nx.Graph,
+        source: str,
+        target: str,
+        heuristic: Callable,
+        cache_heuristic=True
+    ) -> list:
     """Returns a list of nodes from shortest path"""
+
+    # Wrap heuristic in lru_cache if caching enabled
+    if cache_heuristic:
+        primary_heuristic = lru_cache(maxsize=None)(heuristic)
+    else:
+        primary_heuristic = heuristic
 
     # check if a valid smiles string in dataframe
     if not graph.has_node(source) or not graph.has_node(target):
@@ -68,7 +82,7 @@ def A_star(graph: nx.Graph, source: str, target: str, heuristic) -> list:
 
             # calculate costs for neighbor
             g_new = chromo_details[current_id].g + graph[current_id][neighbor]["weight"]
-            h_new = heuristic(neighbor, target)
+            h_new = primary_heuristic(neighbor, target)
             f_new = g_new + h_new
 
             # if path to neighbor has lower cost then update costs
