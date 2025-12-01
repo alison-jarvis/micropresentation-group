@@ -1,63 +1,55 @@
 import pandas as pd
 import numpy as np
 from networkx.algorithms.shortest_paths import astar_path, dijkstra_path
+from graph_helpers import create_chromo_graph, get_peak_distance_heuristic, print_path
 from time import time
-import sys
-import os
-
-current_dir = os.path.dirname(__file__)
-sys.path.append(current_dir)
-
-from graph_helpers import (
-    create_chromo_graph,
-    get_peak_distance_heuristic,
-    print_path,
-    A_star,
-)
-
 
 print("Loading Dataframes...")
 try:
-    chromo_df = pd.read_pickle(f"{current_dir}/chromo_db_filtered.pkl")
+    chromo_df = pd.read_pickle("chromo_db_filtered.pkl")
 except FileNotFoundError as e:
-    raise FileNotFoundError(
-        "Please add the chromo_db_filtered.pkl file to this directory"
-    )
+    raise FileNotFoundError("Please add the chromo_db_filtered.pkl file to this directory")
 
 try:
-    overlap_df = pd.read_pickle(f"{current_dir}/percent_overlap_df.pkl")
+    overlap_df = pd.read_pickle("percent_overlap_df.pkl")
 except FileNotFoundError as e:
-    raise FileNotFoundError(
-        "Please add the percent_overlap_df.pkl file to this directory"
-    )
+    raise FileNotFoundError("Please add the percent_overlap_df.pkl file to this directory")
 overlap_df = overlap_df.dropna()
 
 
 print("Constructing Graphs...")
 # Construct a dictionary of FRET closeness graphs for each solvent
 solvent_graphs = {}
-for solvent in overlap_df["Solvent"].unique():
+for solvent in overlap_df['Solvent'].unique():
     solvent_graphs[solvent] = create_chromo_graph(overlap_df, solvent)
 
 # Add -ln(overlap) as our edge weights for pathfinding
-for graph in solvent_graphs.values():
+# And absorption and emission wavelengths for our nodes
+for solv, graph in solvent_graphs.items():
     for edge in graph.edges(data=True):
         edge[2]["weight"] = -np.log(edge[2]["Percent Overlap"])
+    for node, attrs in graph.nodes.items():
+        node_row = chromo_df.loc[(chromo_df['Solvent_iupac']==solv) & (chromo_df['Chromophore']==node)]
+        if len(node_row) == 0: 
+            breakpoint()
+        attrs["abs_peak"] = node_row['Absorption max (nm)'].iat[0]
+        attrs['ems_peak'] = node_row['Emission max (nm)'].iat[0]
+    
 
 print("Done!")
 print()
-print("-" * 30)
-print("#" * 30)
-print("-" * 30)
+print('-'*30)
+print('#'*30)
+print('-'*30)
 print()
 
 "Solvent Graph Sizes: "
-print("-" * 30)
+print('-'*30)
 print({name: len(graph) for name, graph in solvent_graphs.items()})
 print()
-print("-" * 30)
-print("#" * 30)
-print("-" * 30)
+print('-'*30)
+print('#'*30)
+print('-'*30)
 print()
 
 # Test A* between two random donor/acceptors in chloroform
@@ -73,37 +65,25 @@ output_path_astar = astar_path(
     start_donor,
     end_acceptor,
     heuristic_function,
-    weight="weight",
+    weight='weight'
 )
 stop = time()
 print("Path Found by A*: ")
 print_path(output_path_astar, solvent_graphs[solvent])
 print(f"runtime: {stop-start:.3f}")
 
-print("-" * 30)
+print('-'*30)
 print()
 
 # Compare with dikstra's
 start = time()
 output_path_dijkstra = dijkstra_path(
-    solvent_graphs[solvent], start_donor, end_acceptor, weight="weight"
+    solvent_graphs[solvent],
+    start_donor,
+    end_acceptor,
+    weight='weight'
 )
 stop = time()
 print("Path Found by Dijkstra's: ")
 print_path(output_path_dijkstra, solvent_graphs[solvent])
-print(f"runtime: {stop-start:.3f}")
-
-print("-" * 30)
-print()
-
-start = time()
-output_path_astar_custom = A_star(
-    solvent_graphs[solvent],
-    start_donor,
-    end_acceptor,
-    heuristic_function,
-)
-stop = time()
-print("Path Found by A* (custom): ")
-print_path(output_path_astar_custom, solvent_graphs[solvent])
 print(f"runtime: {stop-start:.3f}")
