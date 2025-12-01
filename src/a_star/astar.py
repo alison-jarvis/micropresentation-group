@@ -17,7 +17,7 @@ def A_star(
         source: str,
         target: str,
         heuristic: Callable,
-        cache_heuristic=True
+        cache_heuristic: bool=True
     ) -> list:
     """Returns a list of nodes from shortest path"""
 
