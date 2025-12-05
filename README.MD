@@ -1,4 +1,20 @@
-** A Pathfiding on FRET Spectral Overlaps**
+**To use this repo**
+
+- Prepare the pickle spectral database and run the spectral-overlap code to:
+    - visualize the donor/acceptor spectral pairs
+    - compute the r_rel for all ordered pairs
+
+- Build the chromophore graph from the overlaps and assign edge weights
+
+- Apply A* to find the optimal energy-transfers and compare with the graphs; given the start (donor) and finish (acceptor) node.
+
+- Analyse the choosen chromophore graph to predict the energy-transfer pathways
+
+
+
+
+
+**A Pathfiding on FRET Spectral Overlaps**
 
 This project combines Förster resonance energy transfer (FRET) spectroscopy with graph-based A* pathfinding. Nodes represent chromophores, in our case natural chlorophylls, edges represent possible donor–acceptor energy-transfer steps, and edge weights are derived from spectral overlap integrals between donor emission and acceptor absorption spectra.
 
