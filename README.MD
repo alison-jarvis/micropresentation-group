@@ -2,6 +2,10 @@
 
 This project combines Förster resonance energy transfer (FRET) spectroscopy with graph-based A* pathfinding. Nodes represent chromophores, in our case natural chlorophylls, edges represent possible donor–acceptor energy-transfer steps, and edge weights are derived from spectral overlap integrals between donor emission and acceptor absorption spectra.
 
+In this project: 
+- the graph is defined by the chromophores and overlap-based edge weights
+
+- the goal is to find a path from an initial donor to a final acceptor that optimized some property.
 
 Project Overview
 Load chlorophyll (or other chromophore) spectra from a dataset.
@@ -25,3 +29,27 @@ $$
 $$
 
 where r is the donor-acceptor distance and Ro is the Forster radius. 
+
+***From overlap to graph weights***
+
+To use FRET-like overlaps in the graph:
+
+*NODES* = Chromophore
+
+*DIRECTED EDGES* = In each ordered donor-acceptor pair (D,A), we had to compute Jrel(D -> A )
+
+*EDGE COST EFFICIENCY* = inverse of the overlap 
+
+                **Larger Overlap  ⇒ Smaller cost  ⇒ Preferred Edges**
+
+***A` search on the chromophore graph***
+
+A* is the best-first search algorithm that is able to find the least-cost path from the graph by combining the cost so far with a heurisitc estimate of the cost to the goal. It maintains a priority queue ordered by **f(n) = g(n) + h(n)
+
+- g(n) is the cost from the start of the node
+
+- h(n) or C is a heuristic lower bound on the remaining cost  (NEED TO VERIFY)
+
+A simple heuristic is to use a lower bound on the remaining path cost 
+- the minimum outgoing edge cost among remaining nodes
+- if h(n) = 0 
