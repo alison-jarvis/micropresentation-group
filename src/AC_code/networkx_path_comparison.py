@@ -11,7 +11,7 @@ sys.path.append(current_dir)
 from ..utils.graph_helpers import (
     create_chromo_graph,
     get_peak_distance_heuristic,
-    print_path
+    print_path,
 )
 
 from ..a_star import A_star
@@ -44,6 +44,15 @@ for graph in solvent_graphs.values():
     for edge in graph.edges(data=True):
         edge[2]["weight"] = -np.log(edge[2]["Percent Overlap"])
 
+# Calculate A* scaling factor
+# Want a scaling factor that meets admissibility criterion
+# Scaling factor is the highest value that will never overestimate the minimum edge cost
+overlap_df["weight"] = -np.log(overlap_df["Percent Overlap"])
+overlap_df["scaling"] = overlap_df["weight"] / np.abs(
+    overlap_df["A: abs (nm)"] - overlap_df["B: em (nm)"]
+)
+heuristic_scaling = overlap_df["scaling"].min()
+
 print("Done!")
 print()
 print("-" * 30)
@@ -65,7 +74,7 @@ solvent = "chloroform"
 start_donor = "O=C1NC(=O)c2ccc(N3CCCCC3)c3cccc1c23"
 end_acceptor = "COc1ccc(-c2cc3c(s2)=CC2=C(C(F)(F)F)c4cc5sc(-c6ccc(OC)cc6)cc5n4[B-](F)(F)[N+]=32)cc1"
 
-heuristic_function = get_peak_distance_heuristic(solvent, chromo_df)
+heuristic_function = get_peak_distance_heuristic(solvent, chromo_df, heuristic_scaling)
 
 start = time()
 output_path_astar = astar_path(
@@ -103,7 +112,7 @@ output_path_astar_custom = A_star(
     start_donor,
     end_acceptor,
     heuristic_function,
-    cache_heuristic=False
+    cache_heuristic=False,
 )
 stop = time()
 print("Path Found by A* (custom, no cache): ")
@@ -118,7 +127,7 @@ output_path_astar_custom = A_star(
     start_donor,
     end_acceptor,
     heuristic_function,
-    cache_heuristic=True
+    cache_heuristic=True,
 )
 stop = time()
 print("Path Found by A* (custom, *with* cache): ")
