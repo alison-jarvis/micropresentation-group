@@ -37,7 +37,7 @@ print("Constructing Graphs...")
 # Construct a dictionary of FRET closeness graphs for each solvent
 solvent_graphs = {}
 for solvent in overlap_df["Solvent"].unique():
-    solvent_graphs[solvent] = create_chromo_graph(overlap_df, solvent)
+    solvent_graphs[solvent] = create_chromo_graph(overlap_df, chromo_df, solvent)
 
 # Add -ln(overlap) as our edge weights for pathfinding
 for graph in solvent_graphs.values():
