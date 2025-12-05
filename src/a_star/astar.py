@@ -1,21 +1,15 @@
 import heapq
 import networkx as nx
-from typing import Callable
+from typing import Callable, Hashable
 from functools import lru_cache
 
-class Chromo:
-    def __init__(self):
-        self.parent = 0
-        self.f = float("inf")
-        self.g = float("inf")
-        self.h = 0
 
-
-"""Implementation based on this tutorial: https://www.geeksforgeeks.org/dsa/a-search-algorithm/"""
+"""Implementation based on this tutorial: https://www.geeksforgeeks.org/dsa/a-search-algorithm/,
+    as well as wikipedia"""
 def A_star(
-        graph: nx.Graph,
-        source: str,
-        target: str,
+        graph: nx.DiGraph,
+        source: Hashable,
+        target: Hashable,
         heuristic: Callable,
         cache_heuristic: bool=True
     ) -> list:
@@ -35,26 +29,20 @@ def A_star(
     if source == target:
         raise ValueError("Source and target cannot be the same chromophore")
 
-    # need a set for found nodes (chromophores)
-    closed_list = set()
+    # parent map for reconstructing path
+    came_from = {}
 
     # dict to store the path details
-    chromo_details = {}
+    node_scores: dict[Hashable, float] = dict()
 
-    # initialize the source node details, going to make a chromophore class
-    source_node = Chromo()
-    source_node.f = 0
-    source_node.g = 0
-    source_node.h = 0
-    source_node.parent = None
-
-    chromo_details[source] = source_node
+    node_scores[source] = 0.0 # g score
+    came_from[source] = None # starting node comes from nowhere
 
     # initialize empty open list for nodes to be visited
     open_list = []
 
     # add current node to open list, this will contain the total cost f and the node id (smiles)
-    heapq.heappush(open_list, (0.0, source))
+    heapq.heappush(open_list, (primary_heuristic(source, target), source))
 
     while open_list:
         # pop minimum value from heap
@@ -66,40 +54,21 @@ def A_star(
             current = target
             while current is not None:  # source node has no parent
                 path.append(current)
-                current = chromo_details[current].parent  # update current to parent
+                current = came_from[current] # update current to parent
             return path[::-1]  # reverse list to get correct order
 
-        # check if current node id has already been visited
-        if current_id in closed_list:
-            continue
-
-        closed_list.add(current_id)
-
         for neighbor in graph.successors(current_id):
-            # only check neighbors to current node if not previously visited
-            if neighbor in closed_list:
-                continue
+    
+            # calculate graph distance to neighbor
+            g_new = node_scores[current_id] + graph[current_id][neighbor]["weight"]
 
-            # calculate costs for neighbor
-            g_new = chromo_details[current_id].g + graph[current_id][neighbor]["weight"]
-            h_new = primary_heuristic(neighbor, target)
-            f_new = g_new + h_new
-
-            # if path to neighbor has lower cost then update costs
-            if neighbor not in chromo_details or chromo_details[neighbor].f > f_new:
+            if g_new < node_scores.get(neighbor, float('inf')):
+                h_new = primary_heuristic(neighbor, target)
+                f_new = g_new + h_new
+                came_from[neighbor] = current_id
+                node_scores[neighbor] = g_new
 
                 # add to open list for further searching
                 heapq.heappush(open_list, (f_new, neighbor))
 
-                # add new node to chromo_details for path
-                # if a lower cost path, value for key gets overwritten
-                new_node = Chromo()
-                new_node.f = f_new
-                new_node.g = g_new
-                new_node.h = h_new
-                new_node.parent = current_id
-
-                chromo_details[neighbor] = new_node
-
-    print("No path found")
     return None
