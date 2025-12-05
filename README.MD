@@ -20,7 +20,8 @@ Load chlorophyll (or other chromophore) spectra from a dataset.
 
 Förster resonance energy transfer (FRET) describes non-radiative energy transfer from an excited donor chromophore to a nearby acceptor via dipole–dipole coupling. The efficiency of FRET depends on distance, relative orientation, donor quantum yield, and the spectral overlap between donor emission and acceptor absorption. FRET Efficiency:
 
+$$
 \( E = 1 + \left( \frac{R}{r} \right)^6 \)
-
+$$
 
 where r is the donor-acceptor distance and Ro is the Forster radius. 
