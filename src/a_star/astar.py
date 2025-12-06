@@ -13,7 +13,19 @@ def A_star(
         heuristic: Callable,
         cache_heuristic: bool=True
     ) -> list:
-    """Returns a list of nodes from shortest path"""
+    """Uses the A* algorithm to find the shortest path between two nodes in a graph.
+
+
+    Args:
+        graph (nx.DiGraph): The graph to search
+        source (Hashable): The node to begin the path
+        target (Hashable): The node to end the path at
+        heuristic (Callable): A function that takes in two nodes and returns a heuristic distance between them.
+        cache_heuristic (bool, optional): Whether to cache calls to heuristic. Defaults to True.
+
+    Returns:
+        list: A list of nodes along the shortest path
+    """    
 
     # Wrap heuristic in lru_cache if caching enabled
     if cache_heuristic:
