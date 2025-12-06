@@ -1,3 +1,10 @@
+## __Spectral Pathfinding: Using A* to Navigate Chromophore Networks for FRET Design__
+
+Ana Sofia Barrera: anabarrera_jauregui@berkeley.edu
+Colman Bouton: clbouton@berkeley.edu
+Alex Chase: achase95@berkeley.edu
+Alison Jarvis: alison_jarvis@berkeley.edu
+
 **To use this repo**
 
 - Prepare the pickle spectral database and run the spectral-overlap code to:
@@ -9,9 +16,6 @@
 - Apply A* to find the optimal energy-transfers and compare with the graphs; given the start (donor) and finish (acceptor) node.
 
 - Analyse the choosen chromophore graph to predict the energy-transfer pathways
-
-
-
 
 
 **A Pathfiding on FRET Spectral Overlaps**
@@ -69,3 +73,15 @@ A* is the best-first search algorithm that is able to find the least-cost path f
 A simple heuristic is to use a lower bound on the remaining path cost 
 - the minimum outgoing edge cost among remaining nodes
 - if h(n) = 0 
+
+
+#### Team Contribution Statement
+
+Ana Sofia Barrera:
+
+Colman Bouton:
+
+Alex Chase:
+Contributed to initial project planning for implementation of FRET with the A* search algorithm. Processed chromophore dataset to generate chromophore interaction graph based on percent overlap of peak absorbance/emission. Wrote the code for the A* search algorithm to identify highest yielding multi-step FRET pathways between a source and target chromophore within the graph. Provided explanation of the A* algorithm in contrast with Dijkstra's algorithm for the micropresentation slides.
+
+Alison Jarvis: 
