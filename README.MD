@@ -11,9 +11,33 @@ Alison Jarvis: alison_jarvis@berkeley.edu
 
 ## Background
 
-Förster resonance energy transfer (FRET) describes the energy transfer that can occur between a donor and acceptor chromophore. This transfer of energy depends on both the emission and absorbance profiles of both chromophores as well as their proximity. Common applications of FRET include determination of proteins conformations, protein-protein interactions, chemical sensors, and many more. FRET also occurs within nature, a notable example including chlorophyll and the energy transfers that occur to facilitate the production of energy. The PhotoChemCAD database provides spectral information for many different compounds relevant to photochemistry, including different chlorophylls. We utilized data from this site to produce a graph of different chlorophylls, and their interactions with one another via FRET. Nodes represent the individual chromophore variants, and edges represent the FRET efficiency between these molecules. High FRET efficiency (E) is desirable, so in order for this to equate to a low cost edge, the $-( \log (E))$ was taken. Additionally the graph is directed due to the required energy flow from a donor to an acceptor chromophore. The FRET efficiency is defined via the following equation. Where $r$ is the separation distance between the donor and the acceptor and $R_o$ is the Förster radius which describes the distance at which the energy transfer is 50% efficient.
+Förster resonance energy transfer (FRET) describes the energy transfer that can occur between a donor and acceptor chromophore. This transfer of energy depends on both the emission and absorbance profiles of both chromophores as well as their proximity. Common applications of FRET include determination of proteins conformations, protein-protein interactions, chemical sensors, and many more. FRET also occurs within nature, a notable example including chlorophyll and the energy transfers that occur to facilitate the production of energy. The PhotoChemCAD database provides spectral information for many different compounds relevant to photochemistry, including different chlorophylls. We utilized data from this site to produce a graph of different chlorophylls, and their interactions with one another via FRET. Nodes represent the individual chromophore variants, and edges represent the FRET efficiency between these molecules. High FRET efficiency (E) is desirable, so in order for this to equate to a low cost edge, the $-( \log (E))$ was taken. Additionally the graph is directed due to the required energy flow from a donor to an acceptor chromophore. The FRET efficiency is defined via the following equation. Where $r$ is the separation distance between the donor and the acceptor and $R_0$ is the Förster radius which describes the distance at which the energy transfer is 50% efficient.
 
-$E = \frac{1}{1 + \left(\dfrac{r}{R_o}\right)^6}$
+$$E = \frac{1}{1 + \left(\dfrac{r}{R_0}\right)^6}$$
+
+The Förster radius is a function of the spectral overlap, $J$, in the following form. 
+
+$$R_0^6 = (0.211^6) \cdot \kappa ^2 \cdot Q_D \cdot n^{-4} \cdot J(\lambda)$$
+
+Where $\kappa$ is the orientation factor, $Q_D$ is the quantum yield, $n$ is the refractive index of the medium, and $J(\lambda)$ is the spectral overlap integral. The spectral overlap is a function of the emission and absorption, and can be calculated as follows. 
+
+$$
+J = \int_0^\infty F_D (\lambda) \epsilon _A (\lambda) \lambda^4\, d\lambda
+$$
+
+Where $F_D$ is the normalized donor emission spectrum as a function of $\lambda$, $\epsilon _A$ is the acceptor molar extinction coefficient as a function of $\lambda$, and $\lambda$ is the wavelength. The molar extinction coefficient $\epsilon _A$ is proportional to the acceptor absorption, which is the data available in the photochemCAD database, as a function of the concentration of the medium. 
+
+Therefore, we can make the approximation that $J_{rel}$, the numerical spectral integral we can calculate from the photochemCAD data, is proportional to $J$, which in turn is proportional to $R_0$, i.e.
+
+$$J_{rel} \propto J \propto R_0^6$$
+
+We can then use the concept that all other quantities are an arbitrary function of the concentration and solvent the fluorescent molecules exist in, to derive our approximation for $E$, which is a function of $J_{rel}$ and an arbitrary but consistent constant $C$. 
+
+$$E = \frac{1}{1 + \left(\dfrac{C}{J_{rel}}\right)}$$
+
+We calculate $J_{rel}$ from the spectral overlap of the emission and absorption from the emipirical data, which means we can use the natural chlorophyll database on photochemCAD to create the following graph. 
+
+![](graph-final.png)
 
 ## Implementation of A* Search Algorithm
 
