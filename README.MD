@@ -83,6 +83,7 @@ A simple heuristic is to use a lower bound on the remaining path cost
 Ana Barrera-Jauregui: Attempted excitation graph representation from photochemCAD database to compare with absorbance/emission from selected chlorophyll strain. Introduced theory on FRET diagram on slides and replicated conceptual project scope to README.
 
 Colman Bouton:
+Derived/proposed edge weights of $-log(E_{fret})$. Developed utility script to assess $A^*$ performance, accuracy against networkx implementation and Dijkstra's. Assessed the admissibility of proposed heuristic functions. Updated $A*$ implementation to cache heuristic function calls, revised $A*$ algorithm for readability, efficiency. Devised ultimate admissibility schema given quantum yield. Assisted with visualization of best path in chlorophyll graph.
 
 Alex Chase:
 Contributed to initial project planning for implementation of FRET with the A* search algorithm. Processed chromophore dataset to generate chromophore interaction graph based on percent overlap of peak absorbance/emission. Wrote the code for the A* search algorithm to identify highest yielding multi-step FRET pathways between a source and target chromophore within the graph. Provided explanation of the A* algorithm in contrast with Dijkstra's algorithm for the micropresentation slides.
