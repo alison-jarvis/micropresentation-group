@@ -8,72 +8,29 @@ Alex Chase: achase95@berkeley.edu
 
 Alison Jarvis: alison_jarvis@berkeley.edu
 
-**To use this repo**
 
-- Prepare the pickle spectral database and run the spectral-overlap code to:
-    - visualize the donor/acceptor spectral pairs
-    - compute the r_rel for all ordered pairs
+## Background
 
-- Build the chromophore graph from the overlaps and assign edge weights
+Förster resonance energy transfer (FRET) describes the energy transfer that can occur between a donor and acceptor chromophore. This transfer of energy depends on both the emission and absorbance profiles of both chromophores as well as their proximity. Common applications of FRET include determination of proteins conformations, protein-protein interactions, chemical sensors, and many more. FRET also occurs within nature, a notable example including chlorophyll and the energy transfers that occur to facilitate the production of energy. The PhotoChemCAD database provides spectral information for many different compounds relevant to photochemistry, including different chlorophylls. We utilized data from this site to produce a graph of different chlorophylls, and their interactions with one another via FRET. Nodes represent the individual chromophore variants, and edges represent the FRET efficiency between these molecules. High FRET efficiency (E) is desirable, so in order for this to equate to a low cost edge, the $-( \log (E))$ was taken. Additionally the graph is directed due to the required energy flow from a donor to an acceptor chromophore. The FRET efficiency is defined via the following equation. Where $r$ is the separation distance between the donor and the acceptor and $R_o$ is the Förster radius which describes the distance at which the energy transfer is 50% efficient.
 
-- Apply A* to find the optimal energy-transfers and compare with the graphs; given the start (donor) and finish (acceptor) node.
+$E = \frac{1}{1 + \left(\dfrac{r}{R_o}\right)^6}$
 
-- Analyse the choosen chromophore graph to predict the energy-transfer pathways
+## Implementation of A* Search Algorithm
 
+A* is an informed search, driven by heuristics, that is able to find the least-cost path from a source node to a target node. It maintains a priority queue with a cost function defined as $f(n) = g(n) + h(n)$ to guide the search. This algorithm is based upon Dijkstra's algorithm, which similarly utilizes a priority queue but where the cost function is defined as $f(n) = g(n)$. Due to the inclusion of a heuristic function $h(n)$ the average time complexity for A* is often better compared to Dijkstra's. Dijkstra's algorithm will check all possible nodes within the connected component of the source and target nodes. In contrast, A* uses a heuristic function to estimate the cost from the current node in the path to the target node. With a reasonably effective heuristic function, the algorithm will need to check far fewer child nodes for each parent node along the path compared to Dijkstra's. Although in the worst case, time complexity for both algorithms is $O(E\log E)$ and the space complexity is $O(V)$. However in practice, due to the guiding nature of the heuristic function, A* has an average effective time complexity of $O(b^d)$ where $b$ is a branching factor that corresponds with the number of child nodes explored per parent node, and $d$ is the depth of the minimum cost search path. This makes A* oftentimes much more efficient at solving for the lowest cost path
 
-**A Pathfiding on FRET Spectral Overlaps**
+## A* for Finding Lowest Cost FRET Pathway between Chlorophyll Variants
 
-This project combines Förster resonance energy transfer (FRET) spectroscopy with graph-based A* pathfinding. Nodes represent chromophores, in our case natural chlorophylls, edges represent possible donor–acceptor energy-transfer steps, and edge weights are derived from spectral overlap integrals between donor emission and acceptor absorption spectra.
+In our case, the lowest cost FRET pathway is one that maximizes FRET efficiency between a source chlorophyll and target chlorophyll molecule. Within our provided example code, we show how A* is used to find the lowest cost, highest efficiency path from Chlorophyll F to Chlorophyll A. These are biologically significant because Chlorophyll F is known to result in maximum attenuation and Chlorophyll A activates the electron transport chain for energy production within plants. Therefore they are reasonable candidates for a source donor and a target acceptor. We found the highest efficiency multi-step pathway between these two chromophore included an intermediate energy transfer with Chlorophyll D. While narrow in scope, this example highlights the potential use for path finding algorithms like A* in regard to finding the most photochemical pathways in a variety of applications.
 
-In this project: 
-- the graph is defined by the chromophores and overlap-based edge weights
-
-- the goal is to find a path from an initial donor to a final acceptor that optimized some property.
-
-Project Overview
-Load chlorophyll (or other chromophore) spectra from a dataset.
-
-- Load chlorophyll spectra from the dataset.
-
-- For each ordered donor-acceptor pair, compute a relative spectral overlap *J_rel*
-
-- Use these overlaps to define the edge weights in the graphs
-
-- Run A* search to find the optimal paths through a chromophore network that can maximize the energy-transfer while optimizing the cost efficiveness when deriving said overlaps. 
+## Limitations and Next Steps
 
 
-***FRET basics***
+## Code Execution
 
+To run the A* algorithm to find the pathway from Chlorophyll F to Chlorophyll A, run the following bash command:
 
-Förster resonance energy transfer (FRET) describes non-radiative energy transfer from an excited donor chromophore to a nearby acceptor via dipole–dipole coupling. The efficiency of FRET depends on distance, relative orientation, donor quantum yield, and the spectral overlap between donor emission and acceptor absorption. FRET Efficiency:
-
-$$\( E = 1 + \left( \frac{R}{r} \right)^6 \)$$
-
-where r is the donor-acceptor distance and Ro is the Forster radius. 
-
-***From overlap to graph weights***
-
-To use FRET-like overlaps in the graph:
-
-*NODES* = Chromophore
-
-*DIRECTED EDGES* = In each ordered donor-acceptor pair (D,A), we had to compute Jrel(D -> A )
-
-*EDGE COST EFFICIENCY* = inverse of the overlap 
-
-                **Larger Overlap  ⇒ Smaller cost  ⇒ Preferred Edges**
-
-***A` search on the chromophore graph***
-
-A* is the best-first search algorithm that is able to find the least-cost path from the graph by combining the cost so far with a heurisitc estimate of the cost to the goal. It maintains a priority queue ordered by **f(n) = g(n) + h(n)
-
-- g(n) is the cost from the start of the node
-
-- h(n) or C is a heuristic lower bound on the remaining cost  (NEED TO VERIFY)
-
-A simple heuristic is to use a lower bound on the remaining path cost 
-- the minimum outgoing edge cost among remaining nodes
-- if h(n) = 0 
+`run_path_tests.sh`
 
 
 #### Team Contribution Statement
@@ -84,7 +41,7 @@ Colman Bouton:
 Derived/proposed edge weights of $-log(E_{fret})$. Developed utility script to assess $A*$ performance, accuracy against networkx implementation and Dijkstra's. Assessed the admissibility of proposed heuristic functions. Updated $A*$ implementation to cache heuristic function calls, revised $A*$ algorithm for readability, efficiency. Devised ultimate admissibility schema given quantum yield. Assisted with visualization of best path in chlorophyll graph.
 
 Alex Chase:
-Contributed to initial project planning for implementation of FRET with the A* search algorithm. Processed chromophore dataset to generate chromophore interaction graph based on percent overlap of peak absorbance/emission. Wrote the code for the A* search algorithm to identify highest yielding multi-step FRET pathways between a source and target chromophore within the graph. Provided explanation of the A* algorithm in contrast with Dijkstra's algorithm for the micropresentation slides.
+Contributed to initial project planning for implementation of FRET with the A* search algorithm. Processed chromophore dataset to generate chromophore interaction graph based on percent overlap of peak absorbance/emission. Wrote the code for the A* search algorithm to identify highest yielding multi-step FRET pathways between a source and target chromophore within the graph. Provided explanation of the A* algorithm in contrast with Dijkstra's algorithm for the micropresentation slides. Provided background on FRET, A* search and biological applications for ReadMe.
 
 Alison Jarvis: 
 Compiled and contextualized equations for FRET, created code to calculate FRET spectral overlap from emission and absorption data, found photochemCAD database and determined how to parse data from it and sort by solvent. Created corresponding graph representation of chlorophylls in the Et20 solvent and preliminary graph visualization. Ran Djikstra and A-star on this graph and analyzed results. Provided explanation of graph representation and A-star applied to graph for presentation. Researched photosynthetic FRET pathways and real-world applications. 
