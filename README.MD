@@ -93,3 +93,7 @@ Compiled and contextualized equations for FRET, created code to calculate FRET s
 7) GeeksforGeeks. (2012, November 25). Dijkstra’s Algorithm to find Shortest Paths from a Source to all. GeeksforGeeks. https://www.geeksforgeeks.org/dsa/dijkstras-shortest-path-algorithm-greedy-algo-7/
 
 8) M. Kasım Şener, Johan Strümpfer, Hsin, J., Chandler, D. L., Scheuring, S., C. Neil Hunter, & Schulten, K. (2011). Förster Energy Transfer Theory as Reflected in the Structures of Photosynthetic Light‐Harvesting Systems. ChemPhysChem, 12(3), 518–531. https://doi.org/10.1002/cphc.201000944
+
+9) Allakhverdiev, S. I., Kreslavski, V. D., Zharmukhamedov, S. K., Voloshin, R. A., Korol’kova, D. V., Tomo, T., & Shen, J.-R. (2016). Chlorophylls d and f and their role in primary photosynthetic processes of cyanobacteria. Biochemistry (Moscow), 81(3), 201–212. https://doi.org/10.1134/S0006297916030020
+
+10) Elias, E., Müller, M., Sardesai, N., Dinc, E., Thiele, I., & Niyogi, K. K. (2021). Harvesting far-red light with plant antenna complexes. Nature Plants, 7, 185–193. https://doi.org/10.1038/s41477-021-00865-2
