@@ -38,12 +38,13 @@ To run the A* algorithm to find the pathway from Chlorophyll F to Chlorophyll A,
 Ana Barrera-Jauregui: Attempted excitation graph representation from photochemCAD database to compare with absorbance/emission from selected chlorophyll strain. Introduced theory on FRET diagram on slides and replicated conceptual project scope to README.
 
 Colman Bouton:
+Derived/proposed edge weights of $-log(E_{fret})$. Developed utility script to assess $A*$ performance, accuracy against networkx implementation and Dijkstra's. Assessed the admissibility of proposed heuristic functions. Updated $A*$ implementation to cache heuristic function calls, revised $A*$ algorithm for readability, efficiency. Devised ultimate admissibility schema given quantum yield. Assisted with visualization of best path in chlorophyll graph.
 
 Alex Chase:
 Contributed to initial project planning for implementation of FRET with the A* search algorithm. Processed chromophore dataset to generate chromophore interaction graph based on percent overlap of peak absorbance/emission. Wrote the code for the A* search algorithm to identify highest yielding multi-step FRET pathways between a source and target chromophore within the graph. Provided explanation of the A* algorithm in contrast with Dijkstra's algorithm for the micropresentation slides. Provided background on FRET, A* search and biological applications for ReadMe.
 
 Alison Jarvis: 
-
+Compiled and contextualized equations for FRET, created code to calculate FRET spectral overlap from emission and absorption data, found photochemCAD database and determined how to parse data from it and sort by solvent. Created corresponding graph representation of chlorophylls in the Et20 solvent and preliminary graph visualization. Ran Djikstra and A-star on this graph and analyzed results. Provided explanation of graph representation and A-star applied to graph for presentation. Researched photosynthetic FRET pathways and real-world applications. 
 
 ## Sources
 
@@ -62,4 +63,3 @@ Alison Jarvis:
 7) GeeksforGeeks. (2012, November 25). Dijkstra’s Algorithm to find Shortest Paths from a Source to all. GeeksforGeeks. https://www.geeksforgeeks.org/dsa/dijkstras-shortest-path-algorithm-greedy-algo-7/
 
 8) M. Kasım Şener, Johan Strümpfer, Hsin, J., Chandler, D. L., Scheuring, S., C. Neil Hunter, & Schulten, K. (2011). Förster Energy Transfer Theory as Reflected in the Structures of Photosynthetic Light‐Harvesting Systems. ChemPhysChem, 12(3), 518–531. https://doi.org/10.1002/cphc.201000944
-
