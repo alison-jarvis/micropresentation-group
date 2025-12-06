@@ -1,6 +1,6 @@
 ## __Spectral Pathfinding: Using A* to Navigate Chromophore Networks for FRET Design__
 
-Ana Sofia Barrera: anabarrera_jauregui@berkeley.edu
+Ana Barrera-Jauregui: anabarrera_jauregui@berkeley.edu
 
 Colman Bouton: clbouton@berkeley.edu
 
@@ -80,7 +80,7 @@ A simple heuristic is to use a lower bound on the remaining path cost
 
 #### Team Contribution Statement
 
-Ana Sofia Barrera:
+Ana Barrera-Jauregui: Attempted excitation graph representation from photochemCAD database to compare with absorbance/emission from selected chlorophyll strain. Introduced theory on FRET diagram on slides and replicated conceptual project scope to README.
 
 Colman Bouton:
 
