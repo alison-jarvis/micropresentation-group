@@ -60,7 +60,7 @@ Additionally, these were also required to calculate an admissible heuristic func
 
 ## Code Execution
 
-To test the code, first install the packages specified in `requirements.txt`. Then, run the jupyter notebook found at `/src/natural_chlorophyll_example.ipynb`.
+To test the code, first install the packages specified in `requirements.txt`. Then, run the jupyter notebook found at `/src/natural_chlorophyll_example.ipynb`. The actual algorithm implementation can be found at `/src/a_star/astar.py`
 
 
 #### Team Contribution Statement
