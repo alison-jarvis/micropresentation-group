@@ -43,16 +43,9 @@ def get_peak_distance_heuristic(
     in nm between emission an absorption peaks of donor and acceptor as a
     heuristic estimate of FRET yield. Note that this will not always lead
     to the shortest path if used as the herustic in A*, since the actual
-<<<<<<< HEAD
-    distance is not bounded below by it. In fact, it kinda sucks.
-    """
-    chromo_df_solvent = chromo_df.loc[chromo_df["Solvent_iupac"] == solvent]
-
-=======
     distance is not bounded below by it.
     '''
     chromo_df_solvent = chromo_df.loc[chromo_df["Solvent_iupac"]==solvent]
->>>>>>> de281d463b10fea4a1c7256ef905469e606624ea
     def heuristic(chromo_b, chromo_a):
         emission_wl = chromo_df_solvent.loc[
             chromo_df_solvent["Chromophore"] == chromo_b, "Emission max (nm)"
