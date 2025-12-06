@@ -25,12 +25,12 @@ In our case, the lowest cost FRET pathway is one that maximizes FRET efficiency 
 
 ## Limitations and Next Steps
 
+The biggest challenge we faced when implementing this algorithm was locating a suitable set of data to evalute it on. Specifically, to actually calculate the FRET efficiency between two chromophores we required the quantum yields of the donor. Additionally, these were also required to calculate an admissible heuristic function for the algorithm. While these do not exist for chlorophylls specificially, there are databases that provide access to the required properties for proteins. In the future, we could use these as a further proof of concept.
+
 
 ## Code Execution
 
-To run the A* algorithm to find the pathway from Chlorophyll F to Chlorophyll A, run the following bash command:
-
-`run_path_tests.sh`
+To test the code, first install the packages specified in `requirements.txt`. Then, run the jupyter notebook found at `/src/natural_chlorophyll_example.ipynb`.
 
 
 #### Team Contribution Statement
