@@ -47,9 +47,7 @@ Load chlorophyll (or other chromophore) spectra from a dataset.
 
 Förster resonance energy transfer (FRET) describes non-radiative energy transfer from an excited donor chromophore to a nearby acceptor via dipole–dipole coupling. The efficiency of FRET depends on distance, relative orientation, donor quantum yield, and the spectral overlap between donor emission and acceptor absorption. FRET Efficiency:
 
-$$
-\( E = 1 + \left( \frac{R}{r} \right)^6 \)
-$$
+$$\( E = 1 + \left( \frac{R}{r} \right)^6 \)$$
 
 where r is the donor-acceptor distance and Ro is the Forster radius. 
 
@@ -88,3 +86,4 @@ Alex Chase:
 Contributed to initial project planning for implementation of FRET with the A* search algorithm. Processed chromophore dataset to generate chromophore interaction graph based on percent overlap of peak absorbance/emission. Wrote the code for the A* search algorithm to identify highest yielding multi-step FRET pathways between a source and target chromophore within the graph. Provided explanation of the A* algorithm in contrast with Dijkstra's algorithm for the micropresentation slides.
 
 Alison Jarvis: 
+Compiled and contextualized equations for FRET, created code to calculate FRET spectral overlap from emission and absorption data, found photochemCAD database and determined how to parse data from it and sort by solvent. Created corresponding graph representation of chlorophylls in the Et20 solvent and preliminary graph visualization. Ran Djikstra and A-star on this graph and analyzed results. Provided explanation of graph representation and A-star applied to graph for presentation. Researched photosynthetic FRET pathways and real-world applications. 
