@@ -27,7 +27,7 @@ In our case, the lowest cost FRET pathway is one that maximizes FRET efficiency 
 
 The biggest challenge we faced when implementing this algorithm was locating a suitable set of data to evalute it on. Specifically, to actually calculate the FRET efficiency between two chromophores we required the quantum yields of the donor. Then, the heuristic function defined as:
 
-$$ -log(\frac{1}{1-\frac{C'}{Q_{d}J_{rel}}) $$
+$$ -log(\frac{1}{1-\frac{C'}{Q_{d}J_{rel}}}) $$
 
 would constitute an admissible, bounding estimate of the distance between the donor and target.
 
