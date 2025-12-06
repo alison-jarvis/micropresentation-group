@@ -1,8 +1,11 @@
 ## __Spectral Pathfinding: Using A* to Navigate Chromophore Networks for FRET Design__
 
 Ana Sofia Barrera: anabarrera_jauregui@berkeley.edu
+
 Colman Bouton: clbouton@berkeley.edu
+
 Alex Chase: achase95@berkeley.edu
+
 Alison Jarvis: alison_jarvis@berkeley.edu
 
 **To use this repo**
